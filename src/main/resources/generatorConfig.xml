@@ -34,24 +34,24 @@
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
-        <table tableName="t_user" domainObjectName="UserInfo" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="t_category" domainObjectName="Category" enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="t_product" domainObjectName="Product" enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="t_cart" domainObjectName="Cart" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="t_order" domainObjectName="Order" enableCountByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="t_order_item" domainObjectName="OrderItem" enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
-        <table tableName="t_pay_info" domainObjectName="PayInfo" enableCountByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <!--<table tableName="t_user" domainObjectName="UserInfo" enableCountByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
+        <!--<table tableName="t_category" domainObjectName="Category" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
+        <!--<table tableName="t_product" domainObjectName="Product" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
+        <!--<table tableName="t_cart" domainObjectName="Cart" enableCountByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
+        <!--<table tableName="t_order" domainObjectName="Order" enableCountByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
+        <!--<table tableName="t_order_item" domainObjectName="OrderItem" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
+        <!--<table tableName="t_pay_info" domainObjectName="PayInfo" enableCountByExample="false"-->
+               <!--enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" enableUpdateByExample="false"/>-->
         <table tableName="t_shipping" domainObjectName="Shipping" enableCountByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false"/>
