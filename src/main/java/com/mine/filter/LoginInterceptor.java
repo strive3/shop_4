@@ -43,8 +43,8 @@ public class LoginInterceptor implements HandlerInterceptor {
                         String cookieValue = cookie.getValue();
                         UserInfo user = userService.selectUserInfoByToken(cookieValue);
                         if (user != null)
-                            session.setAttribute(Const.CURRENTUSER, userInfo);
-                        break;
+                            session.setAttribute(Const.CURRENTUSER, user);
+                        return true;
                     }
                 }
             }
