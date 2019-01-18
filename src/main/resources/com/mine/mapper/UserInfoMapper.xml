@@ -130,4 +130,15 @@
 
   </select>
 
+
+    <update id="updateToken">
+        update t_user set token = #{token} where id = #{id}
+    </update>
+
+
+    <select id="selectUserInfoByToken" resultMap="BaseResultMap">
+      select id, username, password, email, phone, question, answer, role, create_time,
+      update_time
+      from t_user where token = #{token}
+    </select>
 </mapper>

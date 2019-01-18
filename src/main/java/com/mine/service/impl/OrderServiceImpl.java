@@ -893,7 +893,7 @@ public class OrderServiceImpl implements OrderService {
                 .setUndiscountableAmount(undiscountableAmount).setSellerId(sellerId).setBody(body)
                 .setOperatorId(operatorId).setStoreId(storeId).setExtendParams(extendParams)
                 .setTimeoutExpress(timeoutExpress)
-                .setNotifyUrl("http://48hq4m.natappfree.cc/business/order/alipay_callback.do")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
+                .setNotifyUrl("http://dehj4t.natappfree.cc/business/order/alipay_callback.do")//支付宝服务器主动通知商户服务器里指定的页面http路径,根据需要设置
                 .setGoodsDetailList(goodsDetailList);
 
         AlipayF2FPrecreateResult result = tradeService.tradePrecreate(builder);
@@ -904,17 +904,21 @@ public class OrderServiceImpl implements OrderService {
                 AlipayTradePrecreateResponse response = result.getResponse();
                 dumpResponse(response);
 
-                // 需要修改为运行机器上的路径
+                // 需要修改为运行机器上的路径/developer/setup/project/img
                 String filePath = String.format("D://ftpfile" + "/qr-%s.png",
                         response.getOutTradeNo());
                 log.info("filePath:" + filePath);
                 ZxingUtils.getQRCodeImge(response.getQrCode(), 256, filePath);
                 File file = new File(filePath);
                 FTPUtils.uploadFile(Lists.newArrayList(file));
+
+
+
                 Map map = Maps.newHashMap();
                 map.put("orderNo", order.getOrderNo());
                 map.put("qrCode", PropertiesUtils.getValue("imageHost") + "/qr-" + response.getOutTradeNo() + ".png");
 
+                file.delete();
                 return ServerResponse.serverResponseSuccess(map);
 
             case FAILED:

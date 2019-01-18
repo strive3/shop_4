@@ -101,7 +101,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (category != null)
             categories.add(category);
 
-        //查出当前类别的子类别集合
+        //查出当前类别的子类别集合            此时就不需要使用mybatis 的递归查询了
         List<Category> childCategory = categoryMapper.findChildCategory(categoryId);
         //如果子类别的集合为空那么返回    不为空的话执行
         if (childCategory != null && childCategory.size() > 0){

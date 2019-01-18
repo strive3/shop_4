@@ -4,10 +4,14 @@ import com.mine.common.Const;
 import com.mine.common.ServerResponse;
 import com.mine.pojo.UserInfo;
 import com.mine.service.UserService;
+import com.mine.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -27,12 +31,24 @@ public class UserController {
      * 登陆
      */
     @RequestMapping("/login.do")
-    public ServerResponse login(HttpSession session, String username, String password) {
+    public ServerResponse login(HttpSession session, String username, String password, HttpServletResponse response) {
+
 
         ServerResponse serverResponse = userService.login(username, password);
 
         if (serverResponse.isSuccess()) {//登陆成功
             UserInfo userInfo = (UserInfo) serverResponse.getData();
+            //如果登陆成功  将token 保存在cookie中
+            String token = MD5Utils.getMD5(username+password);
+            //token保存到数据库
+            userService.updateToken(token,userInfo.getId());
+            Cookie cookie = new Cookie(Const.CookieEnum.TOKEN.getDesc(),token);
+            cookie.setMaxAge(Const.CookieEnum.MIX_AGE.getCode());  //7天
+            cookie.setHttpOnly(true);
+            //设置cookie的路径
+            cookie.setPath("/business");
+            response.addCookie(cookie);
+
             userInfo.setPassword("");
             session.setAttribute(Const.CURRENTUSER, userInfo);
         }

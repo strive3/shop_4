@@ -6,6 +6,7 @@ import com.mine.dao.UserInfoMapper;
 import com.mine.pojo.UserInfo;
 import com.mine.service.UserService;
 import com.mine.utils.MD5Utils;
+
 import com.mine.utils.TokenCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,15 +36,26 @@ public class UserServiceImpl implements UserService {
         //查看当前用户存不存在
         int result = userInfoMapper.checkUsername(username);
         if (result == 0)
-            return ServerResponse.serverResponseError("用户民不存在");
+            return ServerResponse.serverResponseError("用户名不存在");
         //根据用户名和密码找到当前用户
         UserInfo userInfo = userInfoMapper.selectUserByUsernameAndPassword(username, MD5Utils.getMD5(password));
-        if (userInfo == null)
+        if (userInfo == null) {
             return ServerResponse.serverResponseError("密码错误");
+        }
+
         //返回结果
         return ServerResponse.serverResponseSuccess(userInfo);
     }
+    /**
+     * 更新用户的token   用于自动登录
+     */
+    public ServerResponse updateToken(String token, Integer userId){
 
+        int i = userInfoMapper.updateToken(token, userId);
+        if (i>0)
+            return ServerResponse.serverResponseSuccess();
+        return ServerResponse.serverResponseError("更新token失败");
+    }
     /**
      * 注册
      */
@@ -106,6 +118,7 @@ public class UserServiceImpl implements UserService {
             ServerResponse.serverResponseError("答案错误");
         //服务端生成一个token保存并将token返回给客户端          这里的token是防止横向越权
         String forgetToken = UUID.randomUUID().toString();
+
         TokenCache.set(username, forgetToken);
 
         return ServerResponse.serverResponseSuccess(forgetToken);
@@ -201,5 +214,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfo selectById(int id){
         return userInfoMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public UserInfo selectUserInfoByToken(String token){
+        return userInfoMapper.selectUserInfoByToken(token);
     }
 }

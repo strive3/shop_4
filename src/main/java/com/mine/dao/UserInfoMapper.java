@@ -85,4 +85,13 @@ public interface UserInfoMapper {
      */
     int updateUserBySelectActive(UserInfo userInfo);
 
+    //用户登录的时候更新token
+    int updateToken(@Param("token") String token, @Param("id") Integer id);
+
+    /**
+     * 根据token查找user
+     * @param token
+     * @return
+     */
+    UserInfo selectUserInfoByToken(String token);
 }

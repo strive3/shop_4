@@ -2,6 +2,7 @@ package com.mine.service;
 
 import com.mine.common.ServerResponse;
 import com.mine.pojo.UserInfo;
+import com.mine.utils.MD5Utils;
 
 /**
  * @author 杜晓鹏
@@ -69,4 +70,10 @@ public interface UserService {
      * 根据id 查询用户
      */
     UserInfo selectById(int id);
+
+
+    //将  token保存在数据库中 ，免登陆
+    ServerResponse updateToken(String token , Integer userId);
+
+    UserInfo selectUserInfoByToken(String token);
 }
