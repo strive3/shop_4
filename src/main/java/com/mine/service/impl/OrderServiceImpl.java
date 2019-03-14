@@ -496,7 +496,7 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     @Override
     public void closeOrder(String time) {
-        //step1:查询订单创建时间 <time的未付款的订单
+        //step1:查询订单创建时间 <time的未付款的订单   遍历所有的订单
         List<Order> orderList = orderMapper.findOrderByCreateTime(Const.OrderStatusEnum.ORDER_UN_PAY.getCode(), time);
         if (orderList != null && orderList.size() > 0) {
             for (Order order : orderList) {

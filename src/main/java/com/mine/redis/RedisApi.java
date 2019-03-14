@@ -1,28 +1,34 @@
-package com.mine.utils;
+package com.mine.redis;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 /**
  * @author 杜晓鹏
  * @create 2019-01-18 13:31
  */
-public class RedisPoolUtils {
+@Component
+public class RedisApi {
+    @Autowired
+    private JedisPool jedisPool;
     /**
      * @param key
      * @param value 添加key-value
      */
-    public static String set(String key, String value) {
+    public String set(String key, String value) {
 
         Jedis jedis = null;
         String result = null;
         try {
-            jedis = RedisPool.getJedis();
+            jedis = jedisPool.getResource();
             result = jedis.set(key, value);
         } catch (Exception e) {
             e.printStackTrace();
-            RedisPool.returnBrokenResource(jedis);
+            jedisPool.returnBrokenResource(jedis);
         } finally {
-            RedisPool.returnResource(jedis);
+            jedisPool.returnResource(jedis);
         }
 
         return result;
@@ -32,18 +38,18 @@ public class RedisPoolUtils {
     /**
      * 设置过期时间的key-value
      */
-    public static String setex(String key, String value, int expireTime) {
+    public String setex(String key, String value, int expireTime) {
 
         Jedis jedis = null;
         String result = null;
         try {
-            jedis = RedisPool.getJedis();
+            jedis = jedisPool.getResource();
             result = jedis.setex(key, expireTime, value);
         } catch (Exception e) {
             e.printStackTrace();
-            RedisPool.returnBrokenResource(jedis);
+            jedisPool.returnBrokenResource(jedis);
         } finally {
-            RedisPool.returnResource(jedis);
+            jedisPool.returnResource(jedis);
         }
 
         return result;
@@ -52,18 +58,18 @@ public class RedisPoolUtils {
     /**
      * 根据Key获取value
      */
-    public static String get(String key) {
+    public String get(String key) {
 
         Jedis jedis = null;
         String result = null;
         try {
-            jedis = RedisPool.getJedis();
+            jedis = jedisPool.getResource();
             result = jedis.get(key);
         } catch (Exception e) {
             e.printStackTrace();
-            RedisPool.returnBrokenResource(jedis);
+            jedisPool.returnBrokenResource(jedis);
         } finally {
-            RedisPool.returnResource(jedis);
+            jedisPool.returnResource(jedis);
         }
 
         return result;
@@ -72,18 +78,18 @@ public class RedisPoolUtils {
     /**
      * 删除
      */
-    public static Long del(String key) {
+    public Long del(String key) {
 
         Jedis jedis = null;
         Long result = null;
         try {
-            jedis = RedisPool.getJedis();
+            jedis = jedisPool.getResource();
             result = jedis.del(key);
         } catch (Exception e) {
             e.printStackTrace();
-            RedisPool.returnBrokenResource(jedis);
+            jedisPool.returnBrokenResource(jedis);
         } finally {
-            RedisPool.returnResource(jedis);
+            jedisPool.returnResource(jedis);
         }
 
         return result;
@@ -92,18 +98,18 @@ public class RedisPoolUtils {
     /**
      * 设置key的有效时间
      */
-    public static Long expire(String key, int expireTime) {
+    public Long expire(String key, int expireTime) {
 
         Jedis jedis = null;
         Long result = null;
         try {
-            jedis = RedisPool.getJedis();
+            jedis = jedisPool.getResource();
             result = jedis.expire(key, expireTime);
         } catch (Exception e) {
             e.printStackTrace();
-            RedisPool.returnBrokenResource(jedis);
+            jedisPool.returnBrokenResource(jedis);
         } finally {
-            RedisPool.returnResource(jedis);
+            jedisPool.returnResource(jedis);
         }
 
         return result;
@@ -111,7 +117,7 @@ public class RedisPoolUtils {
 
     public static void main(String[] args) {
 
-        setex("user", "lisi", 10);
+        //setex("user", "lisi", 10);
 
     }
 }

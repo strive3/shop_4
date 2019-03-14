@@ -37,6 +37,7 @@ public class UserController {
         ServerResponse serverResponse = userService.login(username, password);
 
         if (serverResponse.isSuccess()) {//登陆成功
+            //自动登录
             UserInfo userInfo = (UserInfo) serverResponse.getData();
             //如果登陆成功  将token 保存在cookie中
             String token = MD5Utils.getMD5(username+password);

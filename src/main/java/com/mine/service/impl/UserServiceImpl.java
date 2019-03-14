@@ -4,6 +4,7 @@ import com.mine.common.Const;
 import com.mine.common.ServerResponse;
 import com.mine.dao.UserInfoMapper;
 import com.mine.pojo.UserInfo;
+import com.mine.redis.RedisApi;
 import com.mine.service.UserService;
 import com.mine.utils.MD5Utils;
 
@@ -23,6 +24,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserInfoMapper userInfoMapper;
 
+    @Autowired
+    RedisApi redisApi;
     /**
      * 登陆
      */
@@ -118,8 +121,10 @@ public class UserServiceImpl implements UserService {
             ServerResponse.serverResponseError("答案错误");
         //服务端生成一个token保存并将token返回给客户端          这里的token是防止横向越权
         String forgetToken = UUID.randomUUID().toString();
-
-        TokenCache.set(username, forgetToken);
+        //Guava
+        //TokenCache.set(username, forgetToken);
+        //Redis
+        redisApi.set(username,forgetToken);
 
         return ServerResponse.serverResponseSuccess(forgetToken);
     }
@@ -143,7 +148,7 @@ public class UserServiceImpl implements UserService {
         if (TokenCache.get(username) == null || TokenCache.get(username).equals(""))
             return ServerResponse.serverResponseError("token已过时");
         //判断用户输入的token是否正确
-        if (!forgetToken.equals(TokenCache.get(username)))
+        if (!forgetToken.equals(redisApi.get(username)))
             return ServerResponse.serverResponseError("token错误");
 
         //调用dao方法修改用户密码
@@ -216,6 +221,8 @@ public class UserServiceImpl implements UserService {
         return userInfoMapper.selectByPrimaryKey(id);
     }
 
+
+    //自动登录使用的 token
     @Override
     public UserInfo selectUserInfoByToken(String token){
         return userInfoMapper.selectUserInfoByToken(token);

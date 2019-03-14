@@ -11,7 +11,7 @@ import java.util.Date;
  * @create 2019-01-08 15:06
  */
 public class DateUtils {
-    public static final String FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
     /**
      * Date -> String
      * @param date 传入的时间
@@ -22,7 +22,7 @@ public class DateUtils {
     }
     public static String dateToString(Date date) {
         DateTime dateTime = new DateTime(date);
-        return dateTime.toString(FORMAT);
+        return dateTime.toString(STANDARD_FORMAT);
     }
 
     /**
@@ -31,7 +31,7 @@ public class DateUtils {
      *
      */
     public static Date stringToDated(String dateString) {
-        DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern(FORMAT);
+        DateTimeFormatter dateTimeFormat = DateTimeFormat.forPattern(STANDARD_FORMAT);
         DateTime dateTime = dateTimeFormat.parseDateTime(dateString);
         return dateTime.toDate();
     }

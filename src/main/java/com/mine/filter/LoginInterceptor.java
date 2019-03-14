@@ -51,28 +51,28 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         //重构HttpServerletResponse
-        if(userInfo==null){
-            response.reset();
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("application/json;charset=UTF-8");
-            PrintWriter printWriter=response.getWriter();
-            if(userInfo==null){
-                //未登录
-                ServerResponse serverResponse=ServerResponse.serverResponseError("用户未登录");
-                Gson gson=new Gson();
-                String json=gson.toJson(serverResponse);
-                printWriter.write(json);
-            }else{
-                //无权限操作
-                ServerResponse serverResponse=ServerResponse.serverResponseError("无权限操作");
-                Gson gson=new Gson();
-                String json=gson.toJson(serverResponse);
-                printWriter.write(json);
-            }
-            printWriter.flush();
-            printWriter.close();
-            return false;
-        }
+//        if(userInfo==null){
+//            response.reset();
+//            response.setCharacterEncoding("UTF-8");
+//            response.setContentType("application/json;charset=UTF-8");
+//            PrintWriter printWriter=response.getWriter();
+//            if(userInfo==null){
+//                //未登录
+//                ServerResponse serverResponse=ServerResponse.serverResponseError("用户未登录");
+//                Gson gson=new Gson();
+//                String json=gson.toJson(serverResponse);
+//                printWriter.write(json);
+//            }else{
+//                //无权限操作
+//                ServerResponse serverResponse=ServerResponse.serverResponseError("无权限操作");
+//                Gson gson=new Gson();
+//                String json=gson.toJson(serverResponse);
+//                printWriter.write(json);
+//            }
+//            printWriter.flush();
+//            printWriter.close();
+//            return false;
+//        }
 
         //这里的return true 表示继续执行
         return true;
